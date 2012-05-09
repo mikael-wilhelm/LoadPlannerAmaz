@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>se.ndi09mlf.exjob</groupId>
-    <artifactId>LoadPlannerMain</artifactId>
+    <artifactId>main</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
