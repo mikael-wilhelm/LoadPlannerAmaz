@@ -1,0 +1,1 @@
+ALTER TABLE loads ADD COLUMN loadTable varchar(40);
