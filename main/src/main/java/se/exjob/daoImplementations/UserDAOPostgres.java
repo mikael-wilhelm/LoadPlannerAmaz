@@ -74,7 +74,6 @@ public class UserDAOPostgres implements UserDAO{
             try { if (ps != null) {ps.close();} } catch (SQLException e) {throw new ServerException(e);};
             try { if (conn != null) {conn.close();} } catch (SQLException e) {throw new ServerException(e);};
         }
-
     }
 
     private static Connection getConnection() throws ServerException {
