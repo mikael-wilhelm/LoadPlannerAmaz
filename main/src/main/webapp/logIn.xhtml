@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+    <title></title>
+</head>
+<body>
+
+<ui:include src="menu.xhtml"/>
+
+<h:panelGroup layout="block" style=" float:left; position:relative; left:400px; top:100px">
+    Log In
+    <h:form id="logInForm">
+        <table>
+            <tr>
+                <td>UserName</td>
+                <td>
+                    <h:inputText required="true" id="userName" label="User Name" value="#{logInBean.userName}"></h:inputText>
+                    <h:message for="userName"></h:message>
+                </td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td>
+                    <h:inputText required="true" id="password" value="#{logInBean.password}"></h:inputText>
+                    <h:message for="password"></h:message>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h:commandButton value="Log In" id="logInButton" action="#{logInBean.logIn}"></h:commandButton>
+                </td>
+            </tr>
+        </table>
+
+    </h:form>
+    <h:messages></h:messages>
+    <h:form>
+        <h:commandLink action="registerUser.xhtml" id="showLoads" value="Register User">  </h:commandLink>
+    </h:form>
+</h:panelGroup>
+
+<h:form>
+</h:form>
+
+</body>
+</html>

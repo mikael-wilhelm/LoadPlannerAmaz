@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+    <title></title>
+</head>
+<f:event listener="#{userSessionBean.checkUser}" type="preRenderView" />
+<body>
+<h:panelGroup layout="block" style="border: 1px solid;padding:3px;  position:relative; float:left; left:10px; top:5px; ">    <h:form id="linkForm">
+        <h:commandLink action="registerLoads.xhtml" id="administrateLoadLink" value="Administrate Loads">
+        </h:commandLink>
+        <f:verbatim><br/></f:verbatim>
+        <h:commandLink action="showLoads.xhtml" id="showLoads" value="Show Loads">
+        </h:commandLink>
+        <f:verbatim><br/></f:verbatim>
+        <h:outputText value="#{menuBean.loggedInUser.loggedInUser}"></h:outputText>
+    </h:form>
+
+</h:panelGroup>
+
+</body>
+</html>

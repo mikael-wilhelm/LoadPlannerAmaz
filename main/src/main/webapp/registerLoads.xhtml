@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+    <title></title>
+</head>
+<f:event listener="#{userSessionBean.checkUser}" type="preRenderView" />
+<body>
+
+<ui:include src="menu.xhtml" />
+
+<h:panelGroup style="background-color:#90ee90; float:left; position:relative; left:20%; top:100px">
+    Register Loads
+    <h:form id="registerLoadForm" >
+        <table>
+            <tr>
+                <td>Content:</td>
+                <td>
+                    <h:inputText required="true" id="contentInput" label="Enter Content" value="#{registerLoadsManageBean.tempContent}"></h:inputText>
+                    <h:message for="contentInput">Content required</h:message>
+                </td>
+            </tr>
+            <tr>
+                <td>Current Harbor:</td>
+                <td>
+                    <h:inputText required="true" id="harborInput" value="#{registerLoadsManageBean.tempHarbor}"></h:inputText>
+                    <h:message for="harborInput"></h:message>
+                </td>
+            </tr>
+            <tr>
+                <td>Destination:</td>
+                <td>
+                    <h:inputText required="true" id="destinationInput" value="#{registerLoadsManageBean.tempDestination}"></h:inputText>
+                    <h:message for="harborInput"></h:message>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h:commandButton value="Register loads" id="registerLoadButton" action="#{registerLoadsManageBean.registerLoad}"></h:commandButton>
+                </td>
+            </tr>
+
+        </table>
+
+    </h:form>
+</h:panelGroup>
+
+<h:panelGroup style="background-color:#e0ffff; border: 1px solid; position:relative; float:right; right:10%; top:100px; ">
+    Reserved Loads
+    <h:form id="reservedForm">
+        <h:dataTable id="reservedLoads" value="#{registerLoadsManageBean.loads}" var="row" border="5" >
+            <h:column>
+                <f:facet name="header" >Id</f:facet>
+                <h:outputText value="#{row.id}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header" >Load Contenttesta123123</f:facet>
+                <h:outputText value="#{row.content}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header" >Current Harbor</f:facet>
+                <h:outputText value="#{row.harbor}"/>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header" >Destination</f:facet>
+                <h:outputText value="#{row.destination}"/>
+            </h:column>
+
+        </h:dataTable>
+
+    </h:form>
+</h:panelGroup>
+
+</body>
+</html>
