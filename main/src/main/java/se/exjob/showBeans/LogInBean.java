@@ -38,7 +38,7 @@ public class LogInBean {
             doneMessage = new FacesMessage("Password incorrect");
         } catch (ServerException e) {
             returnPage = "logIn.xhtml" ;
-            doneMessage = new FacesMessage(e.getMessage());
+            doneMessage = new FacesMessage(e.getStackTrace().toString());
         }
         FacesContext.getCurrentInstance().addMessage(null,doneMessage);
         return returnPage;
