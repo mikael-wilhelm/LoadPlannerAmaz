@@ -1,1 +1,0 @@
-ALTER TABLE loads ADD COLUMN harbor varchar(40);

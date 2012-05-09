@@ -1,1 +1,0 @@
-CREATE TABLE loads (id int PRIMARY KEY, content varchar(40));
