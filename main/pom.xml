@@ -5,6 +5,7 @@
     <groupId>se.ndi09mlf.exjob</groupId>
     <artifactId>main</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <finalName>LoadPlanner</finalName>
     <packaging>war</packaging>
 
     <properties>
