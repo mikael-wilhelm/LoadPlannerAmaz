@@ -20,6 +20,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.0-801.jdbc4</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-api</artifactId>
             <version>2.1.7</version>
