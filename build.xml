@@ -1,6 +1,6 @@
 <project name="AmazonPublisher">
     <target name="build">
-        <scp file="${build}/main/target/LoadPlannerMain-1.0-SNAPSHOT.war"
+        <scp file="main/target/LoadPlannerMain-1.0-SNAPSHOT.war"
              todir="ubuntu@23.23.208.227:/home/ubuntu/env/tomcat/webapps/"
              trust="true"
              keyfile="${user.home}/.ssh/amazKey.pem"/>
