@@ -5,6 +5,7 @@ import se.exjob.exceptions.NoSuchUserNameException;
 import se.exjob.exceptions.PasswordException;
 import se.exjob.exceptions.ServerException;
 import se.exjob.model.User;
+import se.exjob.model.UserImpl;
 import se.exjob.sessionBeans.UserSessionBean;
 
 import javax.faces.application.FacesMessage;
@@ -32,7 +33,7 @@ public class LogInBean {
             doneMessage = new FacesMessage("");
         } catch (NoSuchUserNameException e) {
             returnPage = "logIn.xhtml";
-            doneMessage = new FacesMessage("There is no such User");
+            doneMessage = new FacesMessage("There is no such UserImpl");
         } catch (PasswordException e) {
             returnPage = "logIn.xhtml";
             doneMessage = new FacesMessage("Password incorrect");

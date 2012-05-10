@@ -4,22 +4,18 @@ import se.exjob.exceptions.NoSuchUserNameException;
 import se.exjob.exceptions.PasswordException;
 import se.exjob.databaseAccess.UserDAO;
 import se.exjob.exceptions.ServerException;
-import se.exjob.model.Load;
 import se.exjob.model.User;
+import se.exjob.model.UserImpl;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class UserDAOPostgres implements UserDAO{
     @Override
-    public User authenticate(String userName, String password) throws NoSuchUserNameException, PasswordException, ServerException {
+    public UserImpl authenticate(String userName, String password) throws NoSuchUserNameException, PasswordException, ServerException {
 
-        User tempUser =  getUser(userName);
+        UserImpl tempUser =  getUser(userName);
 
         if(!tempUser.getPassword().equals(password))  {
             throw new PasswordException();
@@ -29,18 +25,18 @@ public class UserDAOPostgres implements UserDAO{
         }
     }
 
-    public User getUser(String userName) throws ServerException, NoSuchUserNameException {
+    public UserImpl getUser(String userName) throws ServerException, NoSuchUserNameException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        User tempUser;
+        UserImpl tempUser;
         try {
             conn = getConnection();
             ps = conn.prepareStatement("SELECT userName, password FROM loadusers WHERE userName = ?;");
             ps.setString(1,userName);
             rs = ps.executeQuery();
             if(rs.next()){
-                tempUser = new User(rs.getString("username"),rs.getString("password"));
+                tempUser = new UserImpl(rs.getString("username"),rs.getString("password"));
             }
             else{
                 throw new NoSuchUserNameException();
@@ -54,6 +50,11 @@ public class UserDAOPostgres implements UserDAO{
             try { if (conn != null) {conn.close();} } catch (SQLException e) {throw new ServerException(e);};
         }
         return tempUser;
+    }
+
+    @Override
+    public void registerUser(User user) throws ServerException {
+            registerUser(user.getUserName(),user.getPassword());
     }
 
     @Override

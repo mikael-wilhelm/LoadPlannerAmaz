@@ -1,6 +1,7 @@
 package se.exjob.sessionBeans;
 
 import se.exjob.model.User;
+import se.exjob.model.UserImpl;
 
 import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.bean.ManagedBean;

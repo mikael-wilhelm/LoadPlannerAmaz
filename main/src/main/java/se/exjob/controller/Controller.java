@@ -7,6 +7,7 @@ import se.exjob.databaseAccess.LoadDAO;
 import se.exjob.databaseAccess.UserDAO;
 import se.exjob.model.Load;
 import se.exjob.model.User;
+import se.exjob.model.UserImpl;
 
 import java.util.List;
 

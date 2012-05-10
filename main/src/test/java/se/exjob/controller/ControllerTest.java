@@ -10,6 +10,7 @@ import se.exjob.database.Users;
 import se.exjob.exceptions.ServerException;
 import se.exjob.model.Load;
 import se.exjob.model.User;
+import se.exjob.model.UserImpl;
 import org.junit.After;
 
 import org.junit.Before;
@@ -56,8 +57,8 @@ public class ControllerTest {
         int loadToReserveId = expectedReservedLoad.getId();
         int loadToReserveId2 = expectedReservedLoadByOtherUser.getId();
 
-        User user = new User("foo","bar");
-        User user2 = new User("foo2","bar2");
+        UserImpl user = new UserImpl("foo","bar");
+        UserImpl user2 = new UserImpl("foo2","bar2");
         // SUT
         controller.reserveLoad(loadToReserveId,user);
         controller.reserveLoad(loadToReserveId2,user2);
@@ -65,7 +66,7 @@ public class ControllerTest {
         assertThatOneLoadIsReserved(user, expectedNotReservedLoad, expectedReservedLoad);
     }
 
-    private void assertThatOneLoadIsReserved(User user, Load expectedNotReservedLoad, Load expectedReservedLoad) throws LoadNotFoundException, ServerException {
+    private void assertThatOneLoadIsReserved(UserImpl user, Load expectedNotReservedLoad, Load expectedReservedLoad) throws LoadNotFoundException, ServerException {
         List<Load> reservedLoads = controller.getReservedLoads(user);
         List<Load> notReservedLoads = controller.getNotReservedLoadsFilteredByHarbor("");
 
@@ -103,7 +104,7 @@ public class ControllerTest {
         Users.getInstance().registerUser("foo", "bar");
         User user = controller.authenticate("foo", "bar");
 
-        User expectedUser = new User("foo", "bar");
+        User expectedUser = new UserImpl("foo", "bar");
 
         assertThat(user, is(expectedUser));
     }
@@ -120,7 +121,7 @@ public class ControllerTest {
 
         User user = controller.authenticate("foo","bar");
 
-        User expectedUser = new User("foo", "bar");
+        User expectedUser = new UserImpl("foo", "bar");
 
         assertThat(user, is(expectedUser));
     }

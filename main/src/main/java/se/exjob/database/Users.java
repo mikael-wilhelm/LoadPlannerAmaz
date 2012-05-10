@@ -2,7 +2,7 @@ package se.exjob.database;
 
 import se.exjob.exceptions.NoSuchUserNameException;
 import se.exjob.exceptions.PasswordException;
-import se.exjob.model.User;
+import se.exjob.model.UserImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,8 +19,8 @@ public final class Users {
         return users;
     }
 
-    public User registerUser(String userName, String password) {
-        User tempUser = new User(userName,password);
+    public UserImpl registerUser(String userName, String password) {
+        UserImpl tempUser = new UserImpl(userName,password);
         if(!userList.containsValue(tempUser)){
             userList.put(userName, password);
             return tempUser;
@@ -30,8 +30,8 @@ public final class Users {
         }
     }
 
-    public User authenticate(String userName, String password) throws NoSuchUserNameException,PasswordException {
-        User tempUser = new User(userName,userList.get(userName));
+    public UserImpl authenticate(String userName, String password) throws NoSuchUserNameException,PasswordException {
+        UserImpl tempUser = new UserImpl(userName,userList.get(userName));
         if(tempUser.getPassword() == null){
             throw new NoSuchUserNameException();
         }
