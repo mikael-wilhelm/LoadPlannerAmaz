@@ -106,6 +106,7 @@ public class LoadDAOPostgres implements LoadDAO {
             rs = ps.executeQuery();
             if(rs.next()){
                 tempLoad = new Load(Integer.parseInt(rs.getString("id")), rs.getString("content"), rs.getString("harbor"), rs.getString("destination"));
+                tempLoad.setReserved(rs.getBoolean("reserved"));
             }
             else{
                 throw new LoadNotFoundException();

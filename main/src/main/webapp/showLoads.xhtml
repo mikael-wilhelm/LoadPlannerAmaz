@@ -4,59 +4,56 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
-<head>
-    <title></title>
-</head>
+
+<h:head>
+    <title>Load Planner</title>
+</h:head>
 <f:event listener="#{userSessionBean.checkUser}" type="preRenderView" />
-<body>
+<f:event listener="#{showLoadsManageBean.populateNotReservedLoads}" type="preRenderView" />
+<h:body>
 
-<ui:include src="menu.xhtml" />
+    <ui:include src="menu.xhtml" />
 
-<h:panelGroup layout="block" style=" float:left; position:relative; left:400px; top:100px">
+    <h:panelGroup layout="block" style=" float:left; position:relative; left:400px; top:100px">
 
-      <h:form id="showLoadsForm">
-          <h:inputText value="#{showLoadsManageBean.filter}"/>
-          <h:commandButton name ="filterButton" value="Filter"></h:commandButton>
+        <h:form id="showLoadsForm">
+            <h:inputText value="#{showLoadsManageBean.filter}"/>
+            <h:commandButton name ="filterButton" value="Filter"></h:commandButton>
 
-          <h:dataTable  binding="#{showLoadsManageBean.loadTable}" id="showLoadsDT" value="#{showLoadsManageBean.notReservedLoads}" var="row" border="5" >
+            <h:dataTable id="showLoadsDT" value="#{showLoadsManageBean.notReservedLoads}" var="row" border="5" >
 
-              <h:column>
-                  <f:facet name="header" >Load Id</f:facet>
-                  <h:outputText id="content" value="#{row.id}"/>
-              </h:column>
+                <h:column>
+                    <f:facet name="header" >Load Id</f:facet>
+                    <h:outputText id="content" value="#{row.id}"/>
+                </h:column>
 
-              <h:column>
-                  <f:facet name="header" >Load Content Updated</f:facet>
-                  <h:commandLink  id="cmd" value="#{row.content}">
-                  </h:commandLink>
-              </h:column>
+                <h:column>
+                    <f:facet name="header" >Load Content Updated</f:facet>
+                    <h:commandLink  id="cmd" value="#{row.content}">
+                    </h:commandLink>
+                </h:column>
 
-              <h:column>
-                  <f:facet name="header" >Current Harbor</f:facet>
-                  <h:outputText value="#{row.harbor}"/>
-              </h:column>
+                <h:column>
+                    <f:facet name="header" >Current Harbor To test</f:facet>
+                    <h:outputText value="#{row.harbor}"/>
+                </h:column>
 
-              <h:column>
-                  <f:facet name="header" >DestinationsTest4</f:facet>
-                  <h:outputText value="#{row.destination}"/>
-              </h:column>
+                <h:column>
+                    <f:facet name="header" >DestinationsTest4</f:facet>
+                    <h:outputText value="#{row.destination}">
+                    </h:outputText>
+                </h:column>
 
-              <h:column>
-                <h:commandButton id="book" value="Book" action="#{showLoadsManageBean.reserveLoad}">
-                </h:commandButton>
-              </h:column>
+                <h:column>
+                    <h:commandButton id="book" value="Book" action="#{showLoadsManageBean.reserveLoad(row)}">
+                    </h:commandButton>
+                </h:column>
 
-          </h:dataTable>
+            </h:dataTable>
 
-      </h:form>
-    <h:messages></h:messages>
-</h:panelGroup>
+        </h:form>
+        <h:messages></h:messages>
+    </h:panelGroup>
 
-<h:dataTable>
-
-
-
-</h:dataTable>
-
-</body>
+</h:body>
 </html>

@@ -1,5 +1,4 @@
 package se.exjob.showBeans;
-
 import se.exjob.controller.Controller;
 import se.exjob.exceptions.LoadAlreadyReservedException;
 import se.exjob.exceptions.LoadNotFoundException;
@@ -11,50 +10,51 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.component.html.HtmlDataTable;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.List;
 
-@ManagedBean(name="showLoadsManageBean")
-@RequestScoped
+@ManagedBean
+@SessionScoped
 public class ShowLoadsManageBean {
 
-    private List<Load> notReservedLoads = new ArrayList<Load>();
     private Controller controller = new Controller();
     private String filter="";
+    private List<Load> notReservedLoads = new ArrayList<Load>();
     @ManagedProperty(value="#{userSessionBean}")
     private UserSessionBean loggedInUser;
-    private HtmlDataTable loadTable = new HtmlDataTable();
 
-    public void reserveLoad(){
+    public void reserveLoad(Load load){
         FacesMessage doneMessage = null;
         try{
-            controller.reserveLoad(((Load) loadTable.getRowData()).getId(),loggedInUser.getLoggedInUser());
+            System.out.println(load.getId());
+            controller.reserveLoad(load.getId(),loggedInUser.getLoggedInUser());
             doneMessage = new FacesMessage("Load reserved");
         }
         catch (ServerException se){
             doneMessage = new FacesMessage("Server Side Error");
         }
-        catch(LoadNotFoundException ignored){
+        catch(LoadNotFoundException e){
+            doneMessage = new FacesMessage("The Load couldn't be found");
         }
         catch (LoadAlreadyReservedException e) {
             doneMessage = new FacesMessage("The Load is already reserved");
         }
         FacesContext.getCurrentInstance().addMessage(null,doneMessage);
+        populateNotReservedLoads();
     }
 
-    public String getFilter() {
-        return filter;
-    }
-
-    public List<Load> getNotReservedLoads() {
-
+    public void populateNotReservedLoads(){
         try {
-            notReservedLoads = controller.getNotReservedLoadsFilteredByHarbor(filter);
+            notReservedLoads = controller.getNotReservedLoadsFilteredByHarbor("");
         } catch (ServerException ignored) {
         } catch (LoadNotFoundException ignored) {
         }
+    }
+
+
+    public List<Load> getNotReservedLoads() {
         return notReservedLoads;
     }
 
@@ -62,19 +62,19 @@ public class ShowLoadsManageBean {
         this.notReservedLoads = notReservedLoads;
     }
 
+    public String getFilter() {
+        return filter;
+    }
+
     public void setFilter(String filter) {
         this.filter = filter;
     }
 
+    public UserSessionBean getLoggedInUser() {
+        return loggedInUser;
+    }
+
     public void setLoggedInUser(UserSessionBean loggedInUser) {
         this.loggedInUser = loggedInUser;
-    }
-
-    public HtmlDataTable getLoadTable() {
-        return loadTable;
-    }
-
-    public void setLoadTable(HtmlDataTable loadTable) {
-        this.loadTable = loadTable;
     }
 }
