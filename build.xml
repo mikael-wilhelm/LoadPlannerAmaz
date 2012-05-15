@@ -5,4 +5,10 @@
              trust="true"
              keyfile="${user.home}/.ssh/amazKey.pem"/>
     </target>
+
+    <target name ="switchIps">
+        <sleep milliseconds="1000"/>
+        <exec executable="/var/lib/jenkins/ec2/bin/ec2-associate-address - i-53b33a35 23.23.208.227">
+        </exec>
+    </target>
 </project>
