@@ -29,9 +29,8 @@ public class Controller {
 
     public void reserveLoad(int loadID, User user) throws ServerException,LoadAlreadyReservedException, LoadNotFoundException {
         Load load = loadDAO.getLoad(loadID);
-        System.out.println(load.getReserved());
         if(load.getReserved()){
-            throw new LoadAlreadyReservedException();
+            throw new LoadAlreadyReservedException(); // todo return pretty msg, like id and stuff
         }
         else{
             reserveLoad(load,user);

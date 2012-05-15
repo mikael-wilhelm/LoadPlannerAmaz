@@ -17,8 +17,13 @@
     </context-param>
 
     <session-config>
-        <session-timeout>35</session-timeout>
+        <session-timeout>1</session-timeout>
     </session-config>
+
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>http://23.23.208.227:8080/main-1.0-SNAPSHOT/</location>
+    </error-page>
 
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>

@@ -5,7 +5,6 @@ import se.exjob.exceptions.LoadNotFoundException;
 import se.exjob.exceptions.ServerException;
 import se.exjob.model.Load;
 import se.exjob.model.User;
-import se.exjob.model.UserImpl;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -30,11 +29,27 @@ public class LoadDAOPostgres implements LoadDAO {
             stmt.setString(3, tempLoad.getHarbor());
             stmt.setString(4, tempLoad.getDestination());
             stmt.execute();
-        } catch (SQLException sql){
-
+        } catch (SQLException sql) {
+           throw new ServerException(sql);
         } finally {
-            try { if (stmt != null) {stmt.close();} } catch (SQLException e) {throw new ServerException(e);};
-            try { if (conn != null) {conn.close(); }} catch (SQLException e) {throw new ServerException(e);};
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException e) {
+                // todo check with Thomas
+                //noinspection ThrowFromFinallyBlock
+                throw new ServerException(e);
+            }
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                // todo check with Thomas
+                //noinspection ThrowFromFinallyBlock
+                throw new ServerException(e);
+            }
         }
         return tempLoad;
     }
@@ -42,10 +57,12 @@ public class LoadDAOPostgres implements LoadDAO {
     private int getValidId() throws ServerException {
         int actualId;
         Random rnd = new Random();
-        actualId = rnd.nextInt(10000);
-        while (!testIfIdAvailable(actualId)){
-            actualId = rnd.nextInt(10000);
+        int primaryKeysSpan = 10000;
+        actualId = rnd.nextInt(primaryKeysSpan);
+        while (!testIfIdAvailable(actualId)) {
+            actualId = rnd.nextInt(primaryKeysSpan);
         }
+
         return actualId;
     }
 
@@ -57,15 +74,40 @@ public class LoadDAOPostgres implements LoadDAO {
         try {
             conn = getConnection();
             stmt = conn.prepareStatement("SELECT id FROM loads WHERE id=?");
-            stmt.setInt(1,id);
+            stmt.setInt(1, id);
             rs = stmt.executeQuery();
             isOk = !rs.next();
-        } catch (SQLException sql){
-
+        } catch (SQLException sql) {
+            // todo check with Thomas
+            //noinspection ThrowFromFinallyBlock
         } finally {
-            try { if (rs != null) {rs.close();} } catch (SQLException e) {throw new ServerException(e);};
-            try { if (stmt != null) {stmt.close();} } catch (SQLException e) {throw new ServerException(e);};
-            try { if (conn != null) {conn.close();} } catch (SQLException e) {throw new ServerException(e);};
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                // todo check with Thomas
+                //noinspection ThrowFromFinallyBlock
+                throw new ServerException(e);
+            }
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException e) {
+                // todo check with Thomas
+                //noinspection ThrowFromFinallyBlock
+                throw new ServerException(e);
+            }
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                // todo check with Thomas
+                //noinspection ThrowFromFinallyBlock
+                throw new ServerException(e);
+            }
         }
         return isOk;
     }
@@ -77,24 +119,41 @@ public class LoadDAOPostgres implements LoadDAO {
         try {
             conn = getConnection();
             ps = conn.prepareStatement("UPDATE loads SET content=?, harbor=?, destination=?, reserved=?,reservedBy=? WHERE id=?;");
-            ps.setString(1, load.getContent());
+            int content = 1;    // todo: fix magic numbers
+            ps.setString(content, load.getContent());
             ps.setString(2, load.getHarbor());
             ps.setString(3, load.getDestination());
             ps.setBoolean(4, load.getReserved());
             ps.setString(5, load.getReservedBy().toString());
             ps.setInt(6, load.getId());
             ps.execute();
-        } catch (SQLException sql){
-
+        } catch (SQLException sql) {
+                                   // todo rethrow
         } finally {
-            try { if (ps != null) {ps.close(); }} catch (SQLException e) {throw new ServerException(e);};
-            try { if (conn != null) {conn.close(); }} catch (SQLException e) {throw new ServerException(e);};
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                // todo check with Thomas
+                //noinspection ThrowFromFinallyBlock
+                throw new ServerException(e);
+            }
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                // todo check with Thomas
+                //noinspection ThrowFromFinallyBlock
+                throw new ServerException(e);
+            }
         }
         return load;
     }
 
     @Override
-    public Load getLoad(int loadID) throws LoadNotFoundException,ServerException {
+    public Load getLoad(int loadID) throws LoadNotFoundException, ServerException {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -102,22 +161,54 @@ public class LoadDAOPostgres implements LoadDAO {
         try {
             conn = getConnection();
             ps = conn.prepareStatement("SELECT * FROM loads WHERE id = ?;");
-            ps.setInt(1,loadID);
+            // todo fix magic numbers
+            ps.setInt(1, loadID);
             rs = ps.executeQuery();
-            if(rs.next()){
-                tempLoad = new Load(Integer.parseInt(rs.getString("id")), rs.getString("content"), rs.getString("harbor"), rs.getString("destination"));
-                tempLoad.setReserved(rs.getBoolean("reserved"));
+            tempLoad = internalGetLoad(rs);
+        } catch (SQLException sql) {
+            throw new ServerException(sql);
+        } finally {
+            // todo check with Thomas
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                // todo check with Thomas
+                //noinspection ThrowFromFinallyBlock
+                throw new ServerException(e);
             }
-            else{
-                throw new LoadNotFoundException();
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                // todo check with Thomas
+                //noinspection ThrowFromFinallyBlock
+                throw new ServerException(e);
+            }
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                // todo check with Thomas
+                //noinspection ThrowFromFinallyBlock
+                throw new ServerException(e);
             }
         }
-        catch (SQLException sql){
+        return tempLoad;
+    }
 
-        } finally {
-            try { if (rs != null) {rs.close();} } catch (SQLException e) {throw new ServerException(e);};
-            try { if (ps != null) {ps.close();} } catch (SQLException e) {throw new ServerException(e);};
-            try { if (conn != null) {conn.close();} } catch (SQLException e) {throw new ServerException(e);};
+    private Load internalGetLoad(ResultSet rs) throws SQLException, LoadNotFoundException {
+        Load tempLoad;
+        if (rs.next()) {
+            int id = Integer.parseInt(rs.getString("id"));
+            // todo make variables for the params
+            tempLoad = new Load(id, rs.getString("content"), rs.getString("harbor"), rs.getString("destination"));
+            tempLoad.setReserved(rs.getBoolean("reserved"));
+        } else {
+            throw new LoadNotFoundException();
         }
         return tempLoad;
     }
@@ -134,21 +225,45 @@ public class LoadDAOPostgres implements LoadDAO {
             ps = conn.prepareStatement("SELECT id,reservedBy,userName FROM loads,loadUsers WHERE loads.reservedBy=loadUsers.userName AND reserved=TRUE AND reservedBy = ?;");
             ps.setString(1, user.getUserName());
             rs = ps.executeQuery();
-            while (rs.next()){
-                    tempLoads.add(getLoad(Integer.parseInt(rs.getString("id"))));
+            while (rs.next()) {
+                tempLoads.add(getLoad(Integer.parseInt(rs.getString("id"))));
             }
-        }
-        catch (SQLException sql){
+        } catch (SQLException sql) {
+            // todo rethrow
         } finally {
-            try { if (rs != null) {rs.close();} } catch (SQLException e) {throw new ServerException(e);};
-            try { if (ps != null) {ps.close(); }} catch (SQLException e) {throw new ServerException(e);};
-            try { if (conn != null) {conn.close(); }} catch (SQLException e) {throw new ServerException(e);};
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                // todo check with Thomas
+                //noinspection ThrowFromFinallyBlock
+                throw new ServerException(e);
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                // todo check with Thomas
+                //noinspection ThrowFromFinallyBlock
+                throw new ServerException(e);
+            }
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                // todo check with Thomas
+                //noinspection ThrowFromFinallyBlock
+                throw new ServerException(e);
+            }
         }
         return tempLoads;
     }
 
     @Override
-    public List<Load> getNotReservedLoadsFilteredByHarbor(String s) throws ServerException, LoadNotFoundException{
+    public List<Load> getNotReservedLoadsFilteredByHarbor(String s) throws ServerException, LoadNotFoundException {
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -158,16 +273,39 @@ public class LoadDAOPostgres implements LoadDAO {
             conn = getConnection();
             ps = conn.prepareStatement("SELECT id FROM loads WHERE reserved=FALSE;");
             rs = ps.executeQuery();
-            while (rs.next()){
-                    tempLoads.add(getLoad(Integer.parseInt(rs.getString("id"))));
+            while (rs.next()) {
+                tempLoads.add(getLoad(Integer.parseInt(rs.getString("id"))));
             }
-        }
-        catch (SQLException sql){
+        } catch (SQLException sql) {
             throw new ServerException(sql);
         } finally {
-            try { if (rs != null){ rs.close();} } catch (SQLException e) {throw new ServerException(e);};
-            try { if (ps != null) {ps.close();} } catch (SQLException e) {throw new ServerException(e);};
-            try { if (conn != null) {conn.close();} } catch (SQLException e) {throw new ServerException(e);};
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                // todo check with Thomas
+                //noinspection ThrowFromFinallyBlock
+                throw new ServerException(e);
+            }
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                // todo check with Thomas
+                //noinspection ThrowFromFinallyBlock
+                throw new ServerException(e);
+            }
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                // todo check with Thomas
+                //noinspection ThrowFromFinallyBlock
+                throw new ServerException(e);
+            }
         }
         return tempLoads;
     }
@@ -187,7 +325,7 @@ public class LoadDAOPostgres implements LoadDAO {
         String username = dbUri.getUserInfo().split(":")[0];
         String password = dbUri.getUserInfo().split(":")[1];
         String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
-        Connection connection = null;
+        Connection connection;
         try {
             connection = DriverManager.getConnection(dbUrl, username, password);
             return connection;
