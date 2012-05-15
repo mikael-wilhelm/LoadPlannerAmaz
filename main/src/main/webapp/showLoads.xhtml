@@ -7,7 +7,6 @@
 
 <h:head>
     <title>Load Planner</title>
-    <meta http-equiv="refresh" content="#{session.maxInactiveInterval};url=login.xhtml" />
 </h:head>
 <f:event listener="#{userSessionBean.checkUser}" type="preRenderView" />
 <f:event listener="#{showLoadsManageBean.populateNotReservedLoads}" type="preRenderView" />

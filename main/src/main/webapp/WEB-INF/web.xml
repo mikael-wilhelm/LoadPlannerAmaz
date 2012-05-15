@@ -22,7 +22,7 @@
 
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>http://23.23.208.227:8080/main-1.0-SNAPSHOT/</location>
+        <location>/faces/login.xhtml</location>
     </error-page>
 
     <servlet-mapping>
