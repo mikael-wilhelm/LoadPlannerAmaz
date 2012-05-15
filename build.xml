@@ -14,7 +14,7 @@
     </target>
 
     <target name="propTest">
-        <property file="greenBlueServers.properties"/>
+        <property file="/var/lib/jenkins/greenBlueServers.properties"/>
         <condition property="isGreen">
             <equals arg1="${serverSet}" arg2="green"/>
         </condition>
