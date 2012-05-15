@@ -8,7 +8,8 @@
 
     <target name ="switchIps">
         <sleep milliseconds="1000"/>
-        <exec executable="/var/lib/jenkins/ec2/bin/ec2-associate-address -i 53b33a35 23.23.208.227">
+        <exec executable="/var/lib/jenkins/ec2/bin/ec2-associate-address">
+            <arg line="-i 53b33a35 23.23.208.227"/>
         </exec>
     </target>
 </project>
