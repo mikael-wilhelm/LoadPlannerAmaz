@@ -33,19 +33,19 @@
         <exec executable="/var/lib/jenkins/ec2/bin/ec2-associate-address">
             <arg line="-i i-53b33a35 23.23.208.227"/>
         </exec>
-        <replace file="greenBlueServers.properties" token="green" value="blue"/>
+        <replace file="/var/lib/jenkins/greenBlueServers.properties" token="green" value="blue"/>
     </target>
 
     <target name="test2" depends="test" if="isBlue">
-        <replace file="greenBlueServers.properties" token="blue" value="green"/>
         <scp file="main/target/main-1.0-SNAPSHOT.war"
-             todir="ubuntu@ec2-23-22-72-78.compute-1.amazonaws.com:/home/ubuntu/env/tomcat/webapps/"
-             trust="true"
-             keyfile="${user.home}/.ssh/amazKey.pem"/>
+        todir="ubuntu@ec2-23-22-72-78.compute-1.amazonaws.com:/home/ubuntu/env/tomcat/webapps/"
+        trust="true"
+        keyfile="${user.home}/.ssh/amazKey.pem"/>
         <sleep milliseconds="1000"/>
         <exec executable="/var/lib/jenkins/ec2/bin/ec2-associate-address">
             <arg line="-i i-c102cda7 23.23.208.227"/>
         </exec>
+        <replace file="/var/lib/jenkins/greenBlueServers.properties" token="blue" value="green"/>
     </target>
 
 
