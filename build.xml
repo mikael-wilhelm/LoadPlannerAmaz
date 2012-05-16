@@ -39,9 +39,7 @@
         keyfile="${user.home}/.ssh/amazKey.pem"/>
         <!--todo: start tomcat-->
         <waitfor maxwait="3" maxwaitunit="minute">
-            <and>
                 <http url="http://23.23.182.102:8080/main-1.0-SNAPSHOT"/>
-            </and>
         </waitfor>
         <replace file="/var/lib/jenkins/greenBlueServers.properties" token="blue" value="green"/>
         <replace file="index.html" token="address" value="http://23.23.182.102:8080/main-1.0-SNAPSHOT/"/>
