@@ -11,12 +11,12 @@
     </target>
 
     <target name="test" depends="propTest" if="isGreen">
+        <!--todo: stop tomcat-->
         <scp file="main/target/main-1.0-SNAPSHOT.war"
              todir="ubuntu@23.23.208.227:/home/ubuntu/env/tomcat/webapps/"
              trust="true"
              keyfile="${user.home}/.ssh/amazKey.pem"/>
-
-        <sleep milliseconds="1000"/>
+        <!--todo: start tomcat-->
         <!--todo: wait for ping-->
         <replace file="/var/lib/jenkins/greenBlueServers.properties" token="green" value="blue"/>
         <replace file="index.html" token="address" value="http://23.23.208.227:8080/main-1.0-SNAPSHOT/"/>
@@ -28,12 +28,12 @@
     </target>
 
     <target name="test2" depends="test" if="isBlue">
+        <!--todo: stop tomcat-->
         <scp file="main/target/main-1.0-SNAPSHOT.war"
         todir="ubuntu@23.23.182.102:/home/ubuntu/env/tomcat/webapps/"
         trust="true"
         keyfile="${user.home}/.ssh/amazKey.pem"/>
-
-        <sleep milliseconds="1000"/>
+        <!--todo: start tomcat-->
         <!--todo: wait for ping-->
         <replace file="/var/lib/jenkins/greenBlueServers.properties" token="blue" value="green"/>
         <replace file="index.html" token="address" value="http://23.23.182.102:8080/main-1.0-SNAPSHOT/"/>
