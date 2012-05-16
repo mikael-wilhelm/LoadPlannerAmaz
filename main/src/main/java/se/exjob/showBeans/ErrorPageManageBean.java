@@ -10,7 +10,7 @@ import javax.faces.context.FacesContext;
  * Time: 11:05
  * To change this template use File | Settings | File Templates.
  */
-public class ErrorPageManagBean{
+public class ErrorPageManageBean {
     public void redirect(){
         FacesContext fc = FacesContext.getCurrentInstance();
         ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler)
