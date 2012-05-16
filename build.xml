@@ -34,7 +34,7 @@
         <replace file="/var/lib/jenkins/greenBlueServers.properties" token="green" value="blue"/>
         <replace file="index.html" token="address" value="23.23.208.227:8080/main-1.0-SNAPSHOT/"/>
         <scp file="index.html"
-             todir="ubuntu@ec2-23-22-55-131.compute-1.amazonaws.com:/var/www/"
+             todir="ubuntu@ec2-23-22-55-131.compute-1.amazonaws.com:/var/www"
              trust="true"
              keyfile="${user.home}/.ssh/amazKey.pem"/>
     </target>
@@ -49,7 +49,7 @@
         <replace file="/var/lib/jenkins/greenBlueServers.properties" token="blue" value="green"/>
         <replace file="index.html" token="address" value="23.23.182.102:8080/main-1.0-SNAPSHOT/"/>
         <scp file="index.html"
-             todir="ubuntu@ec2-23-22-55-131.compute-1.amazonaws.com:/var/www/"
+             todir="ubuntu@ec2-23-22-55-131.compute-1.amazonaws.com:/var/www"
              trust="true"
              keyfile="${user.home}/.ssh/amazKey.pem"/>
     </target>
