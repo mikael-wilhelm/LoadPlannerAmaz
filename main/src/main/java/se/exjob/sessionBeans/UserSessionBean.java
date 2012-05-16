@@ -27,7 +27,7 @@ public class UserSessionBean {
         if(loggedInUser == null){
             ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler)
                     fc.getApplication().getNavigationHandler();
-            nav.performNavigation("logIn");
+            nav.performNavigation("errorPage");
         }
     }
 }
