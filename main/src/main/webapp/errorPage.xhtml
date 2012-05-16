@@ -8,7 +8,7 @@
 <h:head>
     <title>Load Planner</title>
 </h:head>
-<f:event action="http://ec2-23-22-55-131.compute-1.amazonaws.com" type="preRenderView" />
+<f:event listener="#{errorPageManageBean.redirect}" type="preRenderView" />
 Your session has timed out, redirecting to log on page
 
 <h:body>
