@@ -17,7 +17,7 @@
              trust="true"
              keyfile="${user.home}/.ssh/amazKey.pem"/>
         <!--todo: start tomcat-->
-        <waitfor maxwait="3" maxwaitunit="minutes">
+        <waitfor maxwait="3" maxwaitunit="minute">
             <and>
                 <http url="http://23.23.208.227:8080/main-1.0-SNAPSHOT"/>
             </and>
@@ -38,7 +38,7 @@
         trust="true"
         keyfile="${user.home}/.ssh/amazKey.pem"/>
         <!--todo: start tomcat-->
-        <waitfor maxwait="3" maxwaitunit="minutes">
+        <waitfor maxwait="3" maxwaitunit="minute">
             <and>
                 <http url="http://23.23.182.102:8080/main-1.0-SNAPSHOT"/>
             </and>
