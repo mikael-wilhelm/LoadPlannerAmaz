@@ -17,7 +17,11 @@
              trust="true"
              keyfile="${user.home}/.ssh/amazKey.pem"/>
         <!--todo: start tomcat-->
-        <!--todo: wait for ping-->
+        <waitfor maxwait="3" maxwaitunit="minutes">
+            <and>
+                <http url="http://23.23.208.227:8080/main-1.0-SNAPSHOT"/>
+            </and>
+        </waitfor>
         <replace file="/var/lib/jenkins/greenBlueServers.properties" token="green" value="blue"/>
         <replace file="index.html" token="address" value="http://23.23.208.227:8080/main-1.0-SNAPSHOT/"/>
 
@@ -34,7 +38,11 @@
         trust="true"
         keyfile="${user.home}/.ssh/amazKey.pem"/>
         <!--todo: start tomcat-->
-        <!--todo: wait for ping-->
+        <waitfor maxwait="3" maxwaitunit="minutes">
+            <and>
+                <http url="http://23.23.182.102:8080/main-1.0-SNAPSHOT"/>
+            </and>
+        </waitfor>
         <replace file="/var/lib/jenkins/greenBlueServers.properties" token="blue" value="green"/>
         <replace file="index.html" token="address" value="http://23.23.182.102:8080/main-1.0-SNAPSHOT/"/>
 
