@@ -22,7 +22,7 @@
 
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>/faces/login.xhtml</location>
+        <location>/faces/errorPage.xhtml</location>
     </error-page>
 
     <servlet-mapping>
