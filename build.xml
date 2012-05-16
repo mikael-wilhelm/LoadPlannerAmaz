@@ -1,17 +1,4 @@
 <project name="AmazonPublisher">
-    <target name="build">
-        <scp file="main/target/main-1.0-SNAPSHOT.war"
-             todir="ubuntu@23.23.208.227:/home/ubuntu/env/tomcat/webapps/"
-             trust="true"
-             keyfile="${user.home}/.ssh/amazKey.pem"/>
-    </target>
-
-    <target name ="switchIps">
-        <sleep milliseconds="1000"/>
-        <exec executable="/var/lib/jenkins/ec2/bin/ec2-associate-address">
-            <arg line="-i i-53b33a35 23.23.208.227"/>
-        </exec>
-    </target>
 
     <target name="propTest">
         <property file="/var/lib/jenkins/greenBlueServers.properties"/>
@@ -21,7 +8,6 @@
         <condition property="isBlue">
             <equals arg1="${serverSet}" arg2="blue"/>
         </condition>
-
     </target>
 
     <target name="test" depends="propTest" if="isGreen">
@@ -29,10 +15,12 @@
              todir="ubuntu@23.23.208.227:/home/ubuntu/env/tomcat/webapps/"
              trust="true"
              keyfile="${user.home}/.ssh/amazKey.pem"/>
+
         <sleep milliseconds="1000"/>
         <!--wait for ping-->
         <replace file="/var/lib/jenkins/greenBlueServers.properties" token="green" value="blue"/>
         <replace file="index.html" token="address" value="23.23.208.227:8080/main-1.0-SNAPSHOT/"/>
+
         <scp file="index.html"
              todir="ubuntu@ec2-23-22-55-131.compute-1.amazonaws.com:/var/www"
              trust="true"
@@ -44,10 +32,12 @@
         todir="ubuntu@23.23.182.102:/home/ubuntu/env/tomcat/webapps/"
         trust="true"
         keyfile="${user.home}/.ssh/amazKey.pem"/>
+
         <sleep milliseconds="1000"/>
         <!--wait for ping-->
         <replace file="/var/lib/jenkins/greenBlueServers.properties" token="blue" value="green"/>
         <replace file="index.html" token="address" value="23.23.182.102:8080/main-1.0-SNAPSHOT/"/>
+
         <scp file="index.html"
              todir="ubuntu@ec2-23-22-55-131.compute-1.amazonaws.com:/var/www"
              trust="true"
