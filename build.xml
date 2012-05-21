@@ -16,7 +16,7 @@
                  username="ubuntu"
                  keyfile="${user.home}/.ssh/amazKey.pem"
                  trust="true"
-                 command="sh ${user.home}/env/tomcat/bin/shutdown.sh"/>
+                 command="sh /home/ubuntu/env/tomcat/bin/shutdown.sh"/>
 
         <scp file="main/target/main-1.0-SNAPSHOT.war"
              todir="ubuntu@ec2-50-19-45-46.compute-1.amazonaws.com:/home/ubuntu/env/tomcat/webapps/"
@@ -27,7 +27,7 @@
                  username="ubuntu"
                  keyfile="${user.home}/.ssh/amazKey.pem"
                  trust="true"
-                 command="sh ${user.home}/env/tomcat/bin/startup.sh"/>
+                 command="sh /home/ubuntu/env/tomcat/bin/startup.sh"/>
 
         <waitfor maxwait="3" maxwaitunit="minute">
                 <http url="http://ec2-50-19-45-46.compute-1.amazonaws.com:8080/main-1.0-SNAPSHOT"/>
@@ -48,7 +48,7 @@
                  username="ubuntu"
                  keyfile="${user.home}/.ssh/amazKey.pem"
                  trust="true"
-                 command="sh ${user.home}/env/tomcat/bin/shutdown.sh"/>
+                 command="sh /home/ubuntu/env/tomcat/bin/shutdown.sh"/>
 
         <scp file="main/target/main-1.0-SNAPSHOT.war"
         todir="ubuntu@ec2-23-20-215-166.compute-1.amazonaws.com:/home/ubuntu/env/tomcat/webapps/"
@@ -59,7 +59,7 @@
                  username="ubuntu"
                  keyfile="${user.home}/.ssh/amazKey.pem"
                  trust="true"
-                 command="sh ${user.home}/env/tomcat/bin/startup.sh"/>
+                 command="sh /home/ubuntu/env/tomcat/bin/startup.sh"/>
 
         <waitfor maxwait="3" maxwaitunit="minute">
                 <http url="http://ec2-23-20-215-166.compute-1.amazonaws.com:8080/main-1.0-SNAPSHOT"/>
