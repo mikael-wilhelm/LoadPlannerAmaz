@@ -12,14 +12,22 @@
 
     <target name="test" depends="propTest" if="isGreen">
 
-        <!--todo: stop tomcat-->
+        <sshexec host="ec2-50-19-45-46.compute-1.amazonaws.com"
+                 username="ubuntu"
+                 keyfile="${user.home}/.ssh/amazKey.pem"
+                 trust="true"
+                 command="sh ${user.home}/env/tomcat/bin/shutdown.sh"/>
 
         <scp file="main/target/main-1.0-SNAPSHOT.war"
              todir="ubuntu@ec2-50-19-45-46.compute-1.amazonaws.com:/home/ubuntu/env/tomcat/webapps/"
              trust="true"
              keyfile="${user.home}/.ssh/amazKey.pem"/>
 
-        <!--todo: start tomcat-->
+        <sshexec host="ec2-50-19-45-46.compute-1.amazonaws.com"
+                 username="ubuntu"
+                 keyfile="${user.home}/.ssh/amazKey.pem"
+                 trust="true"
+                 command="sh ${user.home}/env/tomcat/bin/startup.sh"/>
 
         <waitfor maxwait="3" maxwaitunit="minute">
                 <http url="http://ec2-50-19-45-46.compute-1.amazonaws.com:8080/main-1.0-SNAPSHOT"/>
@@ -36,14 +44,22 @@
 
     <target name="test2" depends="test" if="isBlue">
 
-        <!--todo: stop tomcat-->
+        <sshexec host="ec2-23-20-215-166.compute-1.amazonaws.com"
+                 username="ubuntu"
+                 keyfile="${user.home}/.ssh/amazKey.pem"
+                 trust="true"
+                 command="sh ${user.home}/env/tomcat/bin/shutdown.sh"/>
 
         <scp file="main/target/main-1.0-SNAPSHOT.war"
         todir="ubuntu@ec2-23-20-215-166.compute-1.amazonaws.com:/home/ubuntu/env/tomcat/webapps/"
         trust="true"
         keyfile="${user.home}/.ssh/amazKey.pem"/>
 
-        <!--todo: start tomcat-->
+        <sshexec host="ec2-23-20-215-166.compute-1.amazonaws.com"
+                 username="ubuntu"
+                 keyfile="${user.home}/.ssh/amazKey.pem"
+                 trust="true"
+                 command="sh ${user.home}/env/tomcat/bin/startup.sh"/>
 
         <waitfor maxwait="3" maxwaitunit="minute">
                 <http url="http://ec2-23-20-215-166.compute-1.amazonaws.com:8080/main-1.0-SNAPSHOT"/>
