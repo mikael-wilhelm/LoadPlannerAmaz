@@ -23,7 +23,7 @@ public class LogoutFilter implements Filter {
         else {
             long start = (Long) session.getAttribute("start");
 
-            if (System.currentTimeMillis() - start > (30 * 60 * 1000)) {
+            if (System.currentTimeMillis() - start > (10 * 1000)) {
                 session.invalidate();
                 ((HttpServletResponse) response).sendRedirect("ec2-184-73-16-97.compute-1.amazonaws.com");
                 return;
