@@ -41,13 +41,5 @@
         <welcome-file>faces/logIn.xhtml</welcome-file>
     </welcome-file-list>
 
-    <filter>
-        <filter-name>LogoutFilter</filter-name>
-        <filter-class>filter.LogoutFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>LogoutFilter</filter-name>
-        <servlet-name>Faces Servlet</servlet-name>
-    </filter-mapping>
 
 </web-app>
