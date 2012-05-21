@@ -43,7 +43,7 @@
 
     <filter>
         <filter-name>LogoutFilter</filter-name>
-        <filter-class>filter.logoutFilter</filter-class>
+        <filter-class>LogoutFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>LogoutFilter</filter-name>
