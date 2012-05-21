@@ -28,7 +28,7 @@ public class UserSessionBean {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("ec2-184-73-16-97.compute-1.amazonaws.com");
             } catch (IOException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                e.printStackTrace();
             }
         }
     }
