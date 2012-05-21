@@ -11,6 +11,7 @@ import java.net.URISyntaxException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 
 
@@ -317,8 +318,9 @@ public class LoadDAOPostgres implements LoadDAO {
 
     private static Connection getConnection() throws ServerException {
         URI dbUri;
+
         try {
-            dbUri = new URI("postgres://postgres:Dataparm1@localhost/loadPlanner");
+            dbUri = new URI("postgres://postgres:Dataparm1@10.65.1.151:5432/loadPlanner");
         } catch (URISyntaxException e) {
             throw new ServerException(e);
         }
@@ -328,8 +330,10 @@ public class LoadDAOPostgres implements LoadDAO {
         Connection connection;
         try {
             connection = DriverManager.getConnection(dbUrl, username, password);
+
             return connection;
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new ServerException(e);
         }
     }

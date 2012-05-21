@@ -12,7 +12,7 @@ public class ErrorPageManageBean {
     public void redirect(){
         System.out.println("test");
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("http://ec2-23-22-55-131.compute-1.amazonaws.com");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("http://ec2-184-73-16-97.compute-1.amazonaws.com");
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
