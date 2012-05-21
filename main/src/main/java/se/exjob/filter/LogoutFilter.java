@@ -18,12 +18,13 @@ public class LogoutFilter implements Filter {
         HttpSession session = ((HttpServletRequest)request).getSession();
 
         if (session.isNew()) {
-            session.setAttribute("start", System.currentTimeMillis());
+            session.setAttribute("start", System.nanoTime());
         }
         else {
             long start = (Long) session.getAttribute("start");
 
-            if (System.currentTimeMillis() - start > (10 * 1000)) {
+            if (System.nanoTime() - start > (1000000000*5)) {
+
                 session.invalidate();
                 ((HttpServletResponse) response).sendRedirect("ec2-184-73-16-97.compute-1.amazonaws.com");
                 return;
