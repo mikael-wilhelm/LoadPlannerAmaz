@@ -79,19 +79,22 @@ public class UserDAOPostgres implements UserDAO{
 
     private static Connection getConnection() throws ServerException {
         URI dbUri;
+
         try {
-            dbUri = new URI("postgres://postgres:Dataparm1@localhost/loadPlanner");
+            dbUri = new URI("postgres://postgres:Dataparm1@10.65.1.151:5432/loadPlanner");
         } catch (URISyntaxException e) {
             throw new ServerException(e);
         }
         String username = dbUri.getUserInfo().split(":")[0];
         String password = dbUri.getUserInfo().split(":")[1];
         String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
-        Connection connection = null;
+        Connection connection;
         try {
             connection = DriverManager.getConnection(dbUrl, username, password);
+
             return connection;
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new ServerException(e);
         }
     }
