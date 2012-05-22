@@ -17,7 +17,7 @@
     </target>
 
     <target name="test2" depends="test" if="isBlue">
-        <antcall>
+        <antcall target="deployNewVersion">
             <param name="forHost" value="ec2-23-20-215-166.compute-1.amazonaws.com"/>
         </antcall>
     </target>
