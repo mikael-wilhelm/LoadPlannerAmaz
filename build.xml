@@ -60,7 +60,7 @@
 
     <target name="addNewVersionAndStartTomcat">
         <scp file="main/target/main-1.0-SNAPSHOT.war"
-             todir="${host}:/home/ubuntu/env/tomcat/webapps/"
+             todir="ubuntu@${host}:/home/ubuntu/env/tomcat/webapps/"
              trust="true"
              keyfile="${user.home}/.ssh/amazKey.pem"/>
 
