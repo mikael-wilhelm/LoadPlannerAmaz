@@ -64,6 +64,7 @@
              trust="true"
              keyfile="${user.home}/.ssh/amazKey.pem"/>
 
+
         <sshexec host="${host}"
                  username="ubuntu"
                  keyfile="${user.home}/.ssh/amazKey.pem"
