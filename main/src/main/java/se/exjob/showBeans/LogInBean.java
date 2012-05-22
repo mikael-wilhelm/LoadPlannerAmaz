@@ -29,7 +29,7 @@ public class LogInBean {
         try {
             User user = controller.authenticate(userName,password);
             loggedInUser.setLoggedInUser(user);
-            returnPage= "showLoads.xhtml";
+            returnPage= "loggedIn/showLoads.xhtml?faces-redirect=true";
             doneMessage = new FacesMessage("");
         } catch (NoSuchUserNameException e) {
             returnPage = "logIn.xhtml";

@@ -16,11 +16,6 @@
         <param-value>client</param-value>
     </context-param>
 
-    <session-config>
-        <session-timeout>1</session-timeout>
-
-    </session-config>
-
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/faces/errorPage.xhtml</location>
@@ -36,6 +31,15 @@
         <url-pattern>*.jsf</url-pattern>
     </servlet-mapping>
 
+
+    <filter>
+        <filter-name>logoutFilter</filter-name>
+        <filter-class>se.exjob.filter.LogoutFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>logoutFilter</filter-name>
+        <url-pattern>/faces/loggedIn/*</url-pattern>
+    </filter-mapping>
 
     <welcome-file-list>
         <welcome-file>faces/logIn.xhtml</welcome-file>

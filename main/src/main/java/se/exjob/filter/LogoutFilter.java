@@ -1,15 +1,12 @@
-package se.exjobb;
+package se.exjob.filter;
 
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-
-@WebFilter("*")
 public class LogoutFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -18,18 +15,20 @@ public class LogoutFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpSession session = ((HttpServletRequest)request).getSession();
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse resp = (HttpServletResponse) response;
+        HttpSession session = req.getSession();
 
         if (session.isNew()) {
-            session.setAttribute("start", System.nanoTime());
+            session.setAttribute("start", System.currentTimeMillis());
         }
         else {
             long start = (Long) session.getAttribute("start");
 
-            if (System.nanoTime() - start > (1000000000*5)) {
+            if (System.currentTimeMillis() - start > (10 * 1000)) {
 
                 session.invalidate();
-                ((HttpServletResponse) response).sendRedirect("ec2-184-73-16-97.compute-1.amazonaws.com");
+                resp.sendRedirect("http://ec2-184-73-16-97.compute-1.amazonaws.com");
                 return;
             }
         }

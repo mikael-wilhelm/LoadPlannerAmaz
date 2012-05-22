@@ -320,7 +320,7 @@ public class LoadDAOPostgres implements LoadDAO {
         URI dbUri;
 
         try {
-            dbUri = new URI("postgres://postgres:Dataparm1@ec2-23-20-215-166.compute-1.amazonaws.com:5432/loadPlanner");
+            dbUri = new URI(System.getenv("AMAZON_DB"));
         } catch (URISyntaxException e) {
             throw new ServerException(e);
         }
