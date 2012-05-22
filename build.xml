@@ -24,6 +24,7 @@
             <param name="forHost" value="ec2-23-20-215-166.compute-1.amazonaws.com"/>
         </antcall>
         <antcall target="redirectUsers">
+            <param name="forHost" value="ec2-50-19-45-46.compute-1.amazonaws.com"/>
         </antcall>
     </target>
 
