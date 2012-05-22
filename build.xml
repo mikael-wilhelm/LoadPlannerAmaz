@@ -55,7 +55,7 @@
                  username="ubuntu"
                  keyfile="${user.home}/.ssh/amazKey.pem"
                  trust="true"
-                 command="rm -r /home/ubuntu/env/tomcat/webapps/main-1.0-SNAPSHOT"/>
+                 command="rm -f -r /home/ubuntu/env/tomcat/webapps/main-1.0-SNAPSHOT"/>
     </target>
 
     <target name="addNewVersionAndStartTomcat">
