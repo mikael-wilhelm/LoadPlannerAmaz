@@ -50,6 +50,13 @@
                  trust="true"
                  command="sh /home/ubuntu/env/tomcat/bin/shutdown.sh"/>
 
+        <sshexec host="ec2-23-20-215-166.compute-1.amazonaws.com"
+                 username="ubuntu"
+                 keyfile="${user.home}/.ssh/amazKey.pem"
+                 trust="true"
+                 command="rm -r /home/ubuntu/env/tomcat/webapps/main-1.0-SNAPSHOT"/>
+
+
         <scp file="main/target/main-1.0-SNAPSHOT.war"
         todir="ubuntu@ec2-23-20-215-166.compute-1.amazonaws.com:/home/ubuntu/env/tomcat/webapps/"
         trust="true"
