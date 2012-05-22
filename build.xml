@@ -11,75 +11,32 @@
     </target>
 
     <target name="test" depends="propTest" if="isGreen">
-
-        <sshexec host="ec2-50-19-45-46.compute-1.amazonaws.com"
-                 username="ubuntu"
-                 keyfile="${user.home}/.ssh/amazKey.pem"
-                 trust="true"
-                 command="sh /home/ubuntu/env/tomcat/bin/shutdown.sh"/>
-
-        <sshexec host="ec2-50-19-45-46.compute-1.amazonaws.com"
-                 username="ubuntu"
-                 keyfile="${user.home}/.ssh/amazKey.pem"
-                 trust="true"
-                 command="rm -r /home/ubuntu/env/tomcat/webapps/main-1.0-SNAPSHOT"/>
-
-        <scp file="main/target/main-1.0-SNAPSHOT.war"
-             todir="ubuntu@ec2-50-19-45-46.compute-1.amazonaws.com:/home/ubuntu/env/tomcat/webapps/"
-             trust="true"
-             keyfile="${user.home}/.ssh/amazKey.pem"/>
-
-        <sshexec host="ec2-50-19-45-46.compute-1.amazonaws.com"
-                 username="ubuntu"
-                 keyfile="${user.home}/.ssh/amazKey.pem"
-                 trust="true"
-                 command="sh /home/ubuntu/env/tomcat/bin/startup.sh"/>
-
-        <waitfor maxwait="3" maxwaitunit="minute">
-                <http url="http://ec2-50-19-45-46.compute-1.amazonaws.com:8080/main-1.0-SNAPSHOT"/>
-        </waitfor>
-
-        <replace file="/var/lib/jenkins/greenBlueServers.properties" token="green" value="blue"/>
-        <replace file="index.html" token="address" value="http://ec2-50-19-45-46.compute-1.amazonaws.com:8080/main-1.0-SNAPSHOT/"/>
-
-        <scp file="index.html"
-             todir="ubuntu@ec2-184-73-16-97.compute-1.amazonaws.com:/var/www"
-             trust="true"
-             keyfile="${user.home}/.ssh/amazKey.pem"/>
+        <antcall target="deployNewVersion">
+            <param name="forHost" value="ec2-50-19-45-46.compute-1.amazonaws.com"/>
+        </antcall>
     </target>
 
     <target name="test2" depends="test" if="isBlue">
+        <antcall>
+            <param name="forHost" value="ec2-23-20-215-166.compute-1.amazonaws.com"/>
+        </antcall>
+    </target>
 
-        <sshexec host="ec2-23-20-215-166.compute-1.amazonaws.com"
-                 username="ubuntu"
-                 keyfile="${user.home}/.ssh/amazKey.pem"
-                 trust="true"
-                 command="sh /home/ubuntu/env/tomcat/bin/shutdown.sh"/>
+    <target name="deployNewVersion">
+        <antcall target="shutDownTomcatAndRemoveOldVersion">
+            <param name="host" value="${forHost}"/>
+        </antcall>
 
-        <sshexec host="ec2-23-20-215-166.compute-1.amazonaws.com"
-                 username="ubuntu"
-                 keyfile="${user.home}/.ssh/amazKey.pem"
-                 trust="true"
-                 command="rm -r /home/ubuntu/env/tomcat/webapps/main-1.0-SNAPSHOT"/>
-
-
-        <scp file="main/target/main-1.0-SNAPSHOT.war"
-        todir="ubuntu@ec2-23-20-215-166.compute-1.amazonaws.com:/home/ubuntu/env/tomcat/webapps/"
-        trust="true"
-        keyfile="${user.home}/.ssh/amazKey.pem"/>
-
-        <sshexec host="ec2-23-20-215-166.compute-1.amazonaws.com"
-                 username="ubuntu"
-                 keyfile="${user.home}/.ssh/amazKey.pem"
-                 trust="true"
-                 command="sh /home/ubuntu/env/tomcat/bin/startup.sh"/>
+        <antcall target="addNewVersionAndStartTomcat">
+            <param name="host" value="${forHost}"/>
+        </antcall>
 
         <waitfor maxwait="3" maxwaitunit="minute">
-                <http url="http://ec2-23-20-215-166.compute-1.amazonaws.com:8080/main-1.0-SNAPSHOT"/>
+            <http url="http://${forHost}:8080/main-1.0-SNAPSHOT"/>
         </waitfor>
 
-        <replace file="/var/lib/jenkins/greenBlueServers.properties" token="blue" value="green"/>
-        <replace file="index.html" token="address" value="http://ec2-23-20-215-166.compute-1.amazonaws.com:8080/main-1.0-SNAPSHOT/"/>
+        <replace file="/var/lib/jenkins/greenBlueServers.properties" token="green" value="blue"/>
+        <replace file="index.html" token="address" value="http://${forHost}:8080/main-1.0-SNAPSHOT/"/>
 
         <scp file="index.html"
              todir="ubuntu@ec2-184-73-16-97.compute-1.amazonaws.com:/var/www"
@@ -87,6 +44,32 @@
              keyfile="${user.home}/.ssh/amazKey.pem"/>
     </target>
 
+    <target name="shutDownTomcatAndRemoveOldVersion">
+        <sshexec host="${host}"
+                 username="ubuntu"
+                 keyfile="${user.home}/.ssh/amazKey.pem"
+                 trust="true"
+                 command="sh /home/ubuntu/env/tomcat/bin/shutdown.sh"/>
 
+        <sshexec host="${host}"
+                 username="ubuntu"
+                 keyfile="${user.home}/.ssh/amazKey.pem"
+                 trust="true"
+                 command="rm -r /home/ubuntu/env/tomcat/webapps/main-1.0-SNAPSHOT"/>
+    </target>
+
+    <target name="addNewVersionAndStartTomcat">
+        <scp file="main/target/main-1.0-SNAPSHOT.war"
+             todir="${host}:/home/ubuntu/env/tomcat/webapps/"
+             trust="true"
+             keyfile="${user.home}/.ssh/amazKey.pem"/>
+
+        <sshexec host="${host}"
+                 username="ubuntu"
+                 keyfile="${user.home}/.ssh/amazKey.pem"
+                 trust="true"
+                 command="sh /home/ubuntu/env/tomcat/bin/startup.sh"/>
+
+    </target>
 
 </project>
