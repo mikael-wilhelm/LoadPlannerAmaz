@@ -14,11 +14,15 @@
         <antcall target="deployNewVersion">
             <param name="forHost" value="ec2-50-19-45-46.compute-1.amazonaws.com"/>
         </antcall>
+        <antcall target="redirectUsers">
+        </antcall>
     </target>
 
     <target name="test2" depends="test" if="isBlue">
         <antcall target="deployNewVersion">
             <param name="forHost" value="ec2-23-20-215-166.compute-1.amazonaws.com"/>
+        </antcall>
+        <antcall target="redirectUsers">
         </antcall>
     </target>
 
@@ -35,6 +39,10 @@
             <http url="http://${forHost}:8080/main-1.0-SNAPSHOT"/>
         </waitfor>
 
+
+    </target>
+
+    <target name="redirectUsers">
         <replace file="/var/lib/jenkins/greenBlueServers.properties" token="green" value="blue"/>
         <replace file="index.html" token="address" value="http://${forHost}:8080/main-1.0-SNAPSHOT/"/>
 
