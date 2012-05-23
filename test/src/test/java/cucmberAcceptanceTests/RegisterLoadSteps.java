@@ -28,7 +28,7 @@ public class RegisterLoadSteps {
     @Before
     public void init() throws SQLException, URISyntaxException {
         driver = new FirefoxDriver();
-        driver.get("http://localhost:8080/LoadPlannerMain-1.0-SNAPSHOT");
+        driver.get("http://localhost:8080/main-1.0-SNAPSHOT");
         actualContent = "coal";
         actualHarbor = "Stockholm";
         actualDestination = "Helsingfors";
