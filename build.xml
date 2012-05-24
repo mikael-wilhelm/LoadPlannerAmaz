@@ -47,9 +47,7 @@
 
         <fail message="App did not come up.">
             <condition>
-                <not>
                     <http url="http://${forHost}:8080/main-1.0-SNAPSHOT" />
-                </not>
             </condition>
         </fail>
 
