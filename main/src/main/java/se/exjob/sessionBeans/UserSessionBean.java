@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 @ManagedBean(name="userSessionBean")
 @SessionScoped
 public class UserSessionBean {
-    Logger logger = Logger.getLogger("UserSessionBean");
+    private Logger logger = Logger.getLogger("UserSessionBean");
     private User loggedInUser;
 
     public User getLoggedInUser() {
