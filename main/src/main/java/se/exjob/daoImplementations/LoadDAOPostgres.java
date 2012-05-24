@@ -11,7 +11,6 @@ import java.net.URISyntaxException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.Random;
 
 
@@ -120,13 +119,20 @@ public class LoadDAOPostgres implements LoadDAO {
         try {
             conn = getConnection();
             ps = conn.prepareStatement("UPDATE loads SET content=?, harbor=?, destination=?, reserved=?,reservedBy=? WHERE id=?;");
-            int content = 1;    // todo: fix magic numbers
+
+            int content = 1;
+            int harbor = 2;
+            int destination = 3;
+            int reserved = 4;
+            int reservedBy = 5;
+            int id = 6;
+
             ps.setString(content, load.getContent());
-            ps.setString(2, load.getHarbor());
-            ps.setString(3, load.getDestination());
-            ps.setBoolean(4, load.getReserved());
-            ps.setString(5, load.getReservedBy().toString());
-            ps.setInt(6, load.getId());
+            ps.setString(harbor, load.getHarbor());
+            ps.setString(destination, load.getDestination());
+            ps.setBoolean(reserved, load.getReserved());
+            ps.setString(reservedBy, load.getReservedBy().toString());
+            ps.setInt(id, load.getId());
             ps.execute();
         } catch (SQLException sql) {
                                    // todo rethrow
@@ -162,8 +168,8 @@ public class LoadDAOPostgres implements LoadDAO {
         try {
             conn = getConnection();
             ps = conn.prepareStatement("SELECT * FROM loads WHERE id = ?;");
-            // todo fix magic numbers
-            ps.setInt(1, loadID);
+            int id = 1;
+            ps.setInt(id, loadID);
             rs = ps.executeQuery();
             tempLoad = internalGetLoad(rs);
         } catch (SQLException sql) {
@@ -205,9 +211,12 @@ public class LoadDAOPostgres implements LoadDAO {
         Load tempLoad;
         if (rs.next()) {
             int id = Integer.parseInt(rs.getString("id"));
-            // todo make variables for the params
-            tempLoad = new Load(id, rs.getString("content"), rs.getString("harbor"), rs.getString("destination"));
-            tempLoad.setReserved(rs.getBoolean("reserved"));
+            String content = rs.getString("content");
+            String harbor = rs.getString("harbor");
+            String destination = rs.getString("destination");
+            boolean reserved = rs.getBoolean("reserved");
+            tempLoad = new Load(id, content, harbor, destination);
+            tempLoad.setReserved(reserved);
         } else {
             throw new LoadNotFoundException();
         }
@@ -230,7 +239,7 @@ public class LoadDAOPostgres implements LoadDAO {
                 tempLoads.add(getLoad(Integer.parseInt(rs.getString("id"))));
             }
         } catch (SQLException sql) {
-            // todo rethrow
+            throw new ServerException(sql);
         } finally {
             try {
                 if (rs != null) {

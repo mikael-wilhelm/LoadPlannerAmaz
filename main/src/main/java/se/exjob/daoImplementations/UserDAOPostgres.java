@@ -33,7 +33,8 @@ public class UserDAOPostgres implements UserDAO{
         try {
             conn = getConnection();
             ps = conn.prepareStatement("SELECT userName, password FROM loadusers WHERE userName = ?;");
-            ps.setString(1,userName);
+            int userNameIdentifier = 1;
+            ps.setString(userNameIdentifier,userName);
             rs = ps.executeQuery();
             if(rs.next()){
                 tempUser = new UserImpl(rs.getString("username"),rs.getString("password"));
@@ -45,8 +46,14 @@ public class UserDAOPostgres implements UserDAO{
         catch (SQLException sql){
             throw new ServerException(sql);
         } finally {
+            // todo check with Thomas
+            //noinspection ThrowFromFinallyBlock
             try { if (rs != null){ rs.close();} } catch (SQLException e) {throw new ServerException(e);};
+            // todo check with Thomas
+            //noinspection ThrowFromFinallyBlock
             try { if (ps != null) {ps.close();} } catch (SQLException e) {throw new ServerException(e);};
+            // todo check with Thomas
+            //noinspection ThrowFromFinallyBlock
             try { if (conn != null) {conn.close();} } catch (SQLException e) {throw new ServerException(e);};
         }
         return tempUser;
@@ -72,6 +79,8 @@ public class UserDAOPostgres implements UserDAO{
         catch (SQLException sql){
             throw new ServerException(sql);
         } finally {
+            // todo check with Thomas
+            //noinspection ThrowFromFinallyBlock
             try { if (ps != null) {ps.close();} } catch (SQLException e) {throw new ServerException(e);};
             try { if (conn != null) {conn.close();} } catch (SQLException e) {throw new ServerException(e);};
         }

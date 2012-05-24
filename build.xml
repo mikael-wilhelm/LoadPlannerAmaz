@@ -1,6 +1,6 @@
 <project name="AmazonPublisher">
 
-    <target name="propTest">
+    <target name="greenBlueTest">
         <property file="/var/lib/jenkins/greenBlueServers.properties"/>
         <condition property="isGreen">
             <equals arg1="${serverSet}" arg2="green"/>
@@ -10,7 +10,7 @@
         </condition>
     </target>
 
-    <target name="test" depends="propTest" if="isGreen">
+    <target name="greenDeployment" depends="greenBlueTest" if="isGreen">
         <antcall target="deployNewVersion">
             <param name="forHost" value="ec2-23-20-215-166.compute-1.amazonaws.com"/>
         </antcall>
@@ -21,7 +21,7 @@
         </antcall>
     </target>
 
-    <target name="test2" depends="test" if="isBlue">
+    <target name="blueDeployment" depends="greenDeployment" if="isBlue">
         <antcall target="deployNewVersion">
             <param name="forHost" value="ec2-50-19-45-46.compute-1.amazonaws.com"/>
         </antcall>
