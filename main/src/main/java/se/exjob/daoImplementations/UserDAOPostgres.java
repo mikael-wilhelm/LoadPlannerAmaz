@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class UserDAOPostgres implements UserDAO{
-    Logger logger = Logger.getLogger("se.exjob.LoadDAOPostgres");
+    private Logger logger = Logger.getLogger("se.exjob.LoadDAOPostgres");
 
     @Override
     public UserImpl authenticate(String userName, String password) throws NoSuchUserNameException, PasswordException, ServerException {
@@ -99,7 +99,6 @@ public class UserDAOPostgres implements UserDAO{
 
             return connection;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new ServerException(e);
         }
     }

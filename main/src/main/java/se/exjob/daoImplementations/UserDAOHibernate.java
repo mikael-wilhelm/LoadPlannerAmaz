@@ -17,10 +17,12 @@ public class UserDAOHibernate implements UserDAO {
     public User authenticate(String userName, String password) throws NoSuchUserNameException, PasswordException, ServerException {
         User result;
         result = entityManager.find(UserImpl.class, userName);
-        if(result == null)
+        if(result == null){
             throw new NoSuchUserNameException();
-        if(!result.getPassword().equals(password))
+        }
+        if(!result.getPassword().equals(password)){
             throw new PasswordException();
+        }
         return result;
     }
 
@@ -41,7 +43,6 @@ public class UserDAOHibernate implements UserDAO {
         try {
             entityTransaction.commit();
         } catch (RollbackException e) {
-            e.printStackTrace();
             entityTransaction.rollback();
         }
     }

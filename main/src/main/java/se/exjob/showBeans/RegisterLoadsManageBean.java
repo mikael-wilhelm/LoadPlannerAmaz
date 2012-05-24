@@ -18,7 +18,6 @@ public class RegisterLoadsManageBean {
     private String tempContent;
     private String tempHarbor;
     private String tempDestination;
-    private List<Load> loads = new ArrayList<Load>();
     @ManagedProperty(value="#{userSessionBean}")
     private UserSessionBean loggedInUser;
 
@@ -31,6 +30,7 @@ public class RegisterLoadsManageBean {
     }
 
     public List<Load> getLoads() {
+        List<Load> loads = new ArrayList<Load>();
         try {
             loads = controller.getReservedLoads(loggedInUser.getLoggedInUser());
         } catch (LoadNotFoundException ignored) {

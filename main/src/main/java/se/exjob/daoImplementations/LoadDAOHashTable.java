@@ -6,7 +6,6 @@ import se.exjob.exceptions.LoadNotFoundException;
 import se.exjob.model.Load;
 import se.exjob.database.Loads;
 import se.exjob.model.User;
-import se.exjob.model.UserImpl;
 
 import java.util.ArrayList;
 import java.util.List;

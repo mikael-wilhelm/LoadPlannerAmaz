@@ -7,9 +7,6 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import java.net.URI;
 import java.sql.Driver;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
-import java.util.logging.Logger;
 
 
 @ManagedBean(eager = true)

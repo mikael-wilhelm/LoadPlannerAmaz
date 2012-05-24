@@ -7,11 +7,13 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @ManagedBean(name="userSessionBean")
 @SessionScoped
 public class UserSessionBean {
-
+    Logger logger = Logger.getLogger("UserSessionBean");
     private User loggedInUser;
 
     public User getLoggedInUser() {
@@ -32,9 +34,8 @@ public class UserSessionBean {
         if(loggedInUser == null){
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("ec2-184-73-16-97.compute-1.amazonaws.com");
-
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE,e.getMessage());
             }
         }
     }

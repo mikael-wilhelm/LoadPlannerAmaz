@@ -6,7 +6,7 @@ import se.exjob.exceptions.ServerException;
 import se.exjob.model.User;
 
 public interface UserDAO {
-    public User authenticate(String userName, String password) throws NoSuchUserNameException, PasswordException, ServerException;
-    public void registerUser(String userName, String password) throws ServerException;
-    public void registerUser(User user) throws ServerException;
+    User authenticate(String userName, String password) throws NoSuchUserNameException, PasswordException, ServerException;
+    void registerUser(String userName, String password) throws ServerException;
+    void registerUser(User user) throws ServerException;
 }

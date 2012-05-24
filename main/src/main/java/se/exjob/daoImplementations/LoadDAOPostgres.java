@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 
 public class LoadDAOPostgres implements LoadDAO {
-    Logger logger = Logger.getLogger("se.exjob.LoadDAOPostgres");
+    private Logger logger = Logger.getLogger("se.exjob.LoadDAOPostgres");
 
     @Override
     public Load insertLoad(String content, String harbor, String destination) throws ServerException {
@@ -27,10 +27,15 @@ public class LoadDAOPostgres implements LoadDAO {
         try {
             conn = getConnection();
             stmt = conn.prepareStatement("INSERT INTO loads (id, content, harbor, destination) VALUES (?,?,?,?)");
-            stmt.setInt(1, tempLoad.getId());
-            stmt.setString(2, tempLoad.getContent());
-            stmt.setString(3, tempLoad.getHarbor());
-            stmt.setString(4, tempLoad.getDestination());
+            int idIdentifier = 1;
+            int contentIdentifier = 2;
+            int harborIdentifier = 3;
+            int destinationIdentifier = 4;
+
+            stmt.setInt(idIdentifier, tempLoad.getId());
+            stmt.setString(contentIdentifier, tempLoad.getContent());
+            stmt.setString(harborIdentifier, tempLoad.getHarbor());
+            stmt.setString(destinationIdentifier, tempLoad.getDestination());
             stmt.execute();
         } catch (SQLException sql) {
            throw new ServerException(sql);
@@ -61,7 +66,6 @@ public class LoadDAOPostgres implements LoadDAO {
         while (!testIfIdAvailable(actualId)) {
             actualId = rnd.nextInt(primaryKeysSpan);
         }
-
         return actualId;
     }
 
@@ -298,10 +302,8 @@ public class LoadDAOPostgres implements LoadDAO {
         Connection connection;
         try {
             connection = DriverManager.getConnection(dbUrl, username, password);
-
             return connection;
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new ServerException(e);
         }
     }
