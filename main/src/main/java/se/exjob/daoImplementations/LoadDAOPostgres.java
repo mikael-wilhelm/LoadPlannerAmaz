@@ -5,9 +5,6 @@ import se.exjob.exceptions.LoadNotFoundException;
 import se.exjob.exceptions.ServerException;
 import se.exjob.model.Load;
 import se.exjob.model.User;
-
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

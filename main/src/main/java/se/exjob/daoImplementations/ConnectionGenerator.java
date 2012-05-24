@@ -10,6 +10,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionGenerator {
+    private ConnectionGenerator(){
+
+    }
     public static Connection getConnection() throws ServerException {
         URI dbUri;
 

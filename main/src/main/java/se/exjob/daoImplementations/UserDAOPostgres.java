@@ -6,9 +6,6 @@ import se.exjob.databaseAccess.UserDAO;
 import se.exjob.exceptions.ServerException;
 import se.exjob.model.User;
 import se.exjob.model.UserImpl;
-
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
