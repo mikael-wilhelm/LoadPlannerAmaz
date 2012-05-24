@@ -13,7 +13,7 @@
 <h:body>
 
     <ui:include src="menu.xhtml" />
-    Demo continuous Deployment
+    Version 2
     <h:panelGroup layout="block" style=" float:left; position:relative; left:400px; top:100px">
 
         <h:form id="showLoadsForm">
@@ -23,7 +23,7 @@
             <h:dataTable id="showLoadsDT" value="#{showLoadsManageBean.notReservedLoads}" var="row" border="5" >
 
                 <h:column>
-                    <f:facet name="header" >Load Ids</f:facet>
+                    <f:facet name="header" >Load Id</f:facet>
                     <h:outputText id="content" value="#{row.id}"/>
                 </h:column>
 

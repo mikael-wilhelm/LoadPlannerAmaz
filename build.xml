@@ -41,7 +41,7 @@
             <param name="host" value="${forHost}"/>
         </antcall>
 
-        <waitfor maxwait="3" maxwaitunit="minute">
+        <waitfor maxwait="1" maxwaitunit="second">
             <http url="http://${forHost}:8080/main-1.0-SNAPSHOT"/>
         </waitfor>
 
