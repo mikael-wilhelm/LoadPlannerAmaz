@@ -41,13 +41,13 @@
             <param name="host" value="${forHost}"/>
         </antcall>
 
-        <waitfor maxwait="1" maxwaitunit="millisecond">
+        <waitfor maxwait="1" maxwaitunit="millisecond" timeoutproperty="noApp">
             <http url="http://${forHost}:8080/main-1.0-SNAPSHOT"/>
         </waitfor>
 
         <fail message="App did not come up.">
             <condition>
-                    <http url="http://${forHost}:8080/main-1.0-SNAPSHOT" />
+                <isset property="noApp"/>
             </condition>
         </fail>
 
