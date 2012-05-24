@@ -7,7 +7,6 @@ import se.exjob.databaseAccess.LoadDAO;
 import se.exjob.databaseAccess.UserDAO;
 import se.exjob.model.Load;
 import se.exjob.model.User;
-import se.exjob.model.UserImpl;
 
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class Controller {
     public void reserveLoad(int loadID, User user) throws ServerException,LoadAlreadyReservedException, LoadNotFoundException {
         Load load = loadDAO.getLoad(loadID);
         if(load.getReserved()){
-            throw new LoadAlreadyReservedException(); // todo return pretty msg, like id and stuff
+            throw new LoadAlreadyReservedException("For load id: "+load.getId());
         }
         else{
             reserveLoad(load,user);

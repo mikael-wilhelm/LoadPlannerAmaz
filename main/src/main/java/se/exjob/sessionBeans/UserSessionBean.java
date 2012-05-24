@@ -1,9 +1,6 @@
 package se.exjob.sessionBeans;
 
 import se.exjob.model.User;
-import se.exjob.model.UserImpl;
-
-import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -30,6 +27,7 @@ public class UserSessionBean {
         this.loggedInUser = loggedInUser;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void checkUser(){
         if(loggedInUser == null){
             try {

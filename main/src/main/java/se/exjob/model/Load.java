@@ -19,10 +19,6 @@ public class Load {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public boolean getReserved() {
         return reserved;
     }
@@ -39,20 +35,8 @@ public class Load {
         return harbor;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public void setHarbor(String harbor) {
-        this.harbor = harbor;
-    }
-
     public String getDestination() {
         return destination;
-    }
-
-    public void setDestination(String destination) {
-        this.destination = destination;
     }
 
     @Override
@@ -62,9 +46,7 @@ public class Load {
 
         Load load = (Load) o;
 
-        if (id != load.id) {return false; }
-
-        return true;
+        return id == load.id;
     }
 
     @Override

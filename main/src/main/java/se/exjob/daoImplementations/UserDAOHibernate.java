@@ -6,7 +6,6 @@ import se.exjob.exceptions.PasswordException;
 import se.exjob.exceptions.ServerException;
 import se.exjob.model.User;
 import se.exjob.model.UserImpl;
-import se.exjob.model.UserNotFoundUser;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;

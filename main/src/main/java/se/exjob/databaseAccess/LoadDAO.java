@@ -4,7 +4,6 @@ import se.exjob.exceptions.LoadNotFoundException;
 import se.exjob.exceptions.ServerException;
 import se.exjob.model.Load;
 import se.exjob.model.User;
-import se.exjob.model.UserImpl;
 
 import java.util.List;
 

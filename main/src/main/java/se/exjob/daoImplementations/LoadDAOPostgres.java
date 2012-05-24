@@ -12,9 +12,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class LoadDAOPostgres implements LoadDAO {
+    Logger logger = Logger.getLogger("se.exjob.LoadDAOPostgres");
 
     @Override
     public Load insertLoad(String content, String harbor, String destination) throws ServerException {
@@ -37,18 +40,14 @@ public class LoadDAOPostgres implements LoadDAO {
                     stmt.close();
                 }
             } catch (SQLException e) {
-                // todo check with Thomas
-                //noinspection ThrowFromFinallyBlock
-                throw new ServerException(e);
+                logger.log(Level.SEVERE, e.getMessage());
             }
             try {
                 if (conn != null) {
                     conn.close();
                 }
             } catch (SQLException e) {
-                // todo check with Thomas
-                //noinspection ThrowFromFinallyBlock
-                throw new ServerException(e);
+                logger.log(Level.SEVERE, e.getMessage());
             }
         }
         return tempLoad;
@@ -78,36 +77,27 @@ public class LoadDAOPostgres implements LoadDAO {
             rs = stmt.executeQuery();
             isOk = !rs.next();
         } catch (SQLException sql) {
-            // todo check with Thomas
-            //noinspection ThrowFromFinallyBlock
+            throw new ServerException(sql);
         } finally {
             try {
                 if (rs != null) {
                     rs.close();
                 }
             } catch (SQLException e) {
-                // todo check with Thomas
-                //noinspection ThrowFromFinallyBlock
-                throw new ServerException(e);
+                logger.log(Level.SEVERE, e.getMessage());
             }
             try {
                 if (stmt != null) {
                     stmt.close();
                 }
             } catch (SQLException e) {
-                // todo check with Thomas
-                //noinspection ThrowFromFinallyBlock
-                throw new ServerException(e);
-            }
+                logger.log(Level.SEVERE, e.getMessage());            }
             try {
                 if (conn != null) {
                     conn.close();
                 }
             } catch (SQLException e) {
-                // todo check with Thomas
-                //noinspection ThrowFromFinallyBlock
-                throw new ServerException(e);
-            }
+                logger.log(Level.SEVERE, e.getMessage());            }
         }
         return isOk;
     }
@@ -135,26 +125,20 @@ public class LoadDAOPostgres implements LoadDAO {
             ps.setInt(id, load.getId());
             ps.execute();
         } catch (SQLException sql) {
-                                   // todo rethrow
+            throw new ServerException(sql);
         } finally {
             try {
                 if (ps != null) {
                     ps.close();
                 }
             } catch (SQLException e) {
-                // todo check with Thomas
-                //noinspection ThrowFromFinallyBlock
-                throw new ServerException(e);
-            }
+                logger.log(Level.SEVERE, e.getMessage());            }
             try {
                 if (conn != null) {
                     conn.close();
                 }
             } catch (SQLException e) {
-                // todo check with Thomas
-                //noinspection ThrowFromFinallyBlock
-                throw new ServerException(e);
-            }
+                logger.log(Level.SEVERE, e.getMessage());            }
         }
         return load;
     }
@@ -175,34 +159,24 @@ public class LoadDAOPostgres implements LoadDAO {
         } catch (SQLException sql) {
             throw new ServerException(sql);
         } finally {
-            // todo check with Thomas
             try {
                 if (rs != null) {
                     rs.close();
                 }
             } catch (SQLException e) {
-                // todo check with Thomas
-                //noinspection ThrowFromFinallyBlock
-                throw new ServerException(e);
-            }
+                logger.log(Level.SEVERE, e.getMessage());            }
             try {
                 if (ps != null) {
                     ps.close();
                 }
             } catch (SQLException e) {
-                // todo check with Thomas
-                //noinspection ThrowFromFinallyBlock
-                throw new ServerException(e);
-            }
+                logger.log(Level.SEVERE, e.getMessage());            }
             try {
                 if (conn != null) {
                     conn.close();
                 }
             } catch (SQLException e) {
-                // todo check with Thomas
-                //noinspection ThrowFromFinallyBlock
-                throw new ServerException(e);
-            }
+                logger.log(Level.SEVERE, e.getMessage());            }
         }
         return tempLoad;
     }
@@ -225,7 +199,6 @@ public class LoadDAOPostgres implements LoadDAO {
 
     @Override
     public List<Load> getReservedLoads(User user) throws LoadNotFoundException, ServerException {
-
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -246,27 +219,21 @@ public class LoadDAOPostgres implements LoadDAO {
                     rs.close();
                 }
             } catch (SQLException e) {
-                // todo check with Thomas
-                //noinspection ThrowFromFinallyBlock
-                throw new ServerException(e);
+                logger.log(Level.SEVERE, e.getMessage());
             }
             try {
                 if (ps != null) {
                     ps.close();
                 }
             } catch (SQLException e) {
-                // todo check with Thomas
-                //noinspection ThrowFromFinallyBlock
-                throw new ServerException(e);
+                logger.log(Level.SEVERE, e.getMessage());
             }
             try {
                 if (conn != null) {
                     conn.close();
                 }
             } catch (SQLException e) {
-                // todo check with Thomas
-                //noinspection ThrowFromFinallyBlock
-                throw new ServerException(e);
+                logger.log(Level.SEVERE, e.getMessage());
             }
         }
         return tempLoads;
@@ -294,28 +261,20 @@ public class LoadDAOPostgres implements LoadDAO {
                     rs.close();
                 }
             } catch (SQLException e) {
-                // todo check with Thomas
-                //noinspection ThrowFromFinallyBlock
-                throw new ServerException(e);
+                logger.log(Level.SEVERE, e.getMessage());
             }
             try {
                 if (ps != null) {
                     ps.close();
                 }
             } catch (SQLException e) {
-                // todo check with Thomas
-                //noinspection ThrowFromFinallyBlock
-                throw new ServerException(e);
-            }
+                logger.log(Level.SEVERE, e.getMessage());            }
             try {
                 if (conn != null) {
                     conn.close();
                 }
             } catch (SQLException e) {
-                // todo check with Thomas
-                //noinspection ThrowFromFinallyBlock
-                throw new ServerException(e);
-            }
+                logger.log(Level.SEVERE, e.getMessage());            }
         }
         return tempLoads;
     }

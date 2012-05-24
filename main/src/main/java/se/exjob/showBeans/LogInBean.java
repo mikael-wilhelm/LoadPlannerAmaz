@@ -5,7 +5,6 @@ import se.exjob.exceptions.NoSuchUserNameException;
 import se.exjob.exceptions.PasswordException;
 import se.exjob.exceptions.ServerException;
 import se.exjob.model.User;
-import se.exjob.model.UserImpl;
 import se.exjob.sessionBeans.UserSessionBean;
 
 import javax.faces.application.FacesMessage;

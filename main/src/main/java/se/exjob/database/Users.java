@@ -21,7 +21,7 @@ public final class Users {
 
     public UserImpl registerUser(String userName, String password) {
         UserImpl tempUser = new UserImpl(userName,password);
-        if(!userList.containsValue(tempUser)){
+        if(!userList.containsValue(tempUser.getUserName())){
             userList.put(userName, password);
             return tempUser;
         }

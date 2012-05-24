@@ -10,8 +10,12 @@ import se.exjob.model.UserImpl;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UserDAOPostgres implements UserDAO{
+    Logger logger = Logger.getLogger("se.exjob.LoadDAOPostgres");
+
     @Override
     public UserImpl authenticate(String userName, String password) throws NoSuchUserNameException, PasswordException, ServerException {
 
@@ -46,15 +50,9 @@ public class UserDAOPostgres implements UserDAO{
         catch (SQLException sql){
             throw new ServerException(sql);
         } finally {
-            // todo check with Thomas
-            //noinspection ThrowFromFinallyBlock
-            try { if (rs != null){ rs.close();} } catch (SQLException e) {throw new ServerException(e);};
-            // todo check with Thomas
-            //noinspection ThrowFromFinallyBlock
-            try { if (ps != null) {ps.close();} } catch (SQLException e) {throw new ServerException(e);};
-            // todo check with Thomas
-            //noinspection ThrowFromFinallyBlock
-            try { if (conn != null) {conn.close();} } catch (SQLException e) {throw new ServerException(e);};
+            try { if (rs != null){ rs.close();} } catch (SQLException e) {logger.log(Level.SEVERE, e.getMessage());}
+            try { if (ps != null) {ps.close();} } catch (SQLException e) {logger.log(Level.SEVERE, e.getMessage());}
+            try { if (conn != null) {conn.close();} } catch (SQLException e) {logger.log(Level.SEVERE, e.getMessage());}
         }
         return tempUser;
     }
@@ -79,10 +77,8 @@ public class UserDAOPostgres implements UserDAO{
         catch (SQLException sql){
             throw new ServerException(sql);
         } finally {
-            // todo check with Thomas
-            //noinspection ThrowFromFinallyBlock
-            try { if (ps != null) {ps.close();} } catch (SQLException e) {throw new ServerException(e);};
-            try { if (conn != null) {conn.close();} } catch (SQLException e) {throw new ServerException(e);};
+            try { if (ps != null) {ps.close();} } catch (SQLException e) {logger.log(Level.SEVERE, e.getMessage());}
+            try { if (conn != null) {conn.close();} } catch (SQLException e) {logger.log(Level.SEVERE, e.getMessage());}
         }
     }
 

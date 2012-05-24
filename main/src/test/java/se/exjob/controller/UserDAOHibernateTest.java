@@ -1,7 +1,6 @@
 package se.exjob.controller;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import se.exjob.daoImplementations.UserDAOHibernate;
 import se.exjob.databaseAccess.UserDAO;
@@ -28,8 +27,6 @@ public class UserDAOHibernateTest {
 
         userDAO = new UserDAOHibernate();
         ((UserDAOHibernate) userDAO).setEntityManager(entityManager);
-
-
     }
 
     @Test

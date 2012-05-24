@@ -1,11 +1,11 @@
 package se.exjob.showBeans;
 
-import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 
+@SuppressWarnings("UnusedDeclaration")
 @ManagedBean(name="errorPageManageBean")
 @RequestScoped
 public class ErrorPageManageBean {
